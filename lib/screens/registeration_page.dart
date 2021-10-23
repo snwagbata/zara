@@ -3,8 +3,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:zara/components/logo.dart';
+import 'package:zara/helpers/error_handler.dart';
 import 'package:zara/helpers/validator.dart';
+import 'package:zara/services/auth.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -50,6 +54,31 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    late final _auth = Provider.of<Auth>(context);
+
+    _signup({
+      required String email,
+      required String password,
+      required String name,
+    }) async {
+      try {
+        SystemChannels.textInput.invokeMethod('TextInput.hide');
+        _auth.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+          name: name,
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Account created."),
+        ));
+      } on Exception catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(ErrorHandler.getExceptionText(e)),
+        ));
+      }
+    }
+
     final name = TextFormField(
       autofocus: false,
       textInputAction: TextInputAction.next,
@@ -174,7 +203,13 @@ class _RegisterPageState extends State<RegisterPage> {
                           (states) => Colors.white),
                     ),
                     child: const Text('SIGN UP'),
-                    onPressed: () {},
+                    onPressed: () {
+                      _signup(
+                        email: _email.text,
+                        password: _password.text,
+                        name: _name.text,
+                      );
+                    },
                   ),
                 ],
               ),
