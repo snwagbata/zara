@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zara/Database%20Manager/DatabaseManager.dart';
+import 'package:zara/models/app_user.dart';
 //import 'package:zara/models/app_user.dart';
 
 class Auth with ChangeNotifier {
@@ -14,14 +15,6 @@ class Auth with ChangeNotifier {
   Stream<User?> get user {
     return _auth.userChanges();
   }
-
-  /*Future createNewUser(String email, String password) async {
-    try {
-      UserCredential userCredential = await _auth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      User
-    } catch (e) {}
-  }*/
 
   /// Create user with email and password
   /// Returns a Future<User>
@@ -37,20 +30,14 @@ class Auth with ChangeNotifier {
       final UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
       final User? user = userCredential.user;
-      await DatabaseManager().createUserData(name, user!.uid);
-      // Create user document if above is successful and send to firestore
-      /*AppUser appUser = AppUser(
+      AppUser appUser = AppUser(
         uid: user!.uid,
         name: name,
         email: email,
         classes: [],
       );
-      await _firestore
-          .collection('users')
-          .doc(appUser.uid)
-          .set(appUser.toMap());
-      // Notify widget tree that the user has been created
-      notifyListeners();*/
+
+      await DatabaseManager().createUserData(appUser);
       return user;
     } catch (error) {
       print(error);
@@ -62,6 +49,7 @@ class Auth with ChangeNotifier {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       final User user = userCredential.user!;
+      //print(_firestore.collection(user))
       return user;
     } catch (e) {
       print(e);
