@@ -54,7 +54,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    late final _auth = Provider.of<Auth>(context);
+    late final _auth = Provider.of<Auth>(context, listen: false);
 
     _signup({
       required String email,
