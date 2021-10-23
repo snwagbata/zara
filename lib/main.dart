@@ -2,6 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zara/constants/app_themes.dart';
+import 'package:zara/screens/home_page.dart';
+import 'package:zara/screens/login_page.dart';
+import 'package:zara/screens/registeration_page.dart';
+import 'package:zara/screens/reset_password.dart';
 import 'package:zara/services/auth.dart';
 
 Future<void> main() async {
@@ -38,10 +43,17 @@ class _MyAppState extends State<MyApp> {
     return Consumer<Auth>(builder: (context, auth, child) {
       return MaterialApp(
         title: 'Zara',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
+        theme: buildTheme(),
+        darkTheme: buildDarkTheme(),
+        home: context.watch<User?>() == null
+            ? const LoginPage()
+            : const HomePage(),
+        routes: {
+          '/login': (context) => const LoginPage(),
+          '/home': (context) => const HomePage(),
+          '/reset-password': (context) => const ResetPasswordPage(),
+          '/create-account': (context) => const RegisterPage(),
+        },
       );
     });
   }
