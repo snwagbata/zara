@@ -44,7 +44,6 @@ class _MyAppState extends State<MyApp> {
       return MaterialApp(
         title: 'Zara',
         theme: buildTheme(),
-        darkTheme: buildDarkTheme(),
         home: context.watch<User?>() == null
             ? const LoginPage()
             : const HomePage(),

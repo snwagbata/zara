@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zara/components/logo.dart';
@@ -39,10 +40,12 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       decoration: InputDecoration(
         prefixIcon: Padding(
           padding: const EdgeInsets.only(left: 5.0),
-          child: Platform.isIOS
-              ? Icon(CupertinoIcons.mail,
-                  color: Theme.of(context).iconTheme.color)
-              : Icon(Icons.email, color: Theme.of(context).iconTheme.color),
+          child: kIsWeb
+              ? Icon(Icons.email, color: Theme.of(context).iconTheme.color)
+              : Platform.isIOS
+                  ? Icon(CupertinoIcons.mail,
+                      color: Theme.of(context).iconTheme.color)
+                  : Icon(Icons.email, color: Theme.of(context).iconTheme.color),
         ),
         labelText: 'Email',
         contentPadding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
