@@ -14,36 +14,33 @@ class Auth with ChangeNotifier {
     return _auth.userChanges();
   }
 
+  /// Get current user
+  /// Used by ProxyProvider to set AppUserService
+  String? get currentUser => _auth.currentUser!.uid;
+
   /// Create user with email and password
   /// Returns a Future<User>
   /// If the user is created successfully, the user will be logged in and a document will be created in the users collection
   /// If the user is not created successfully, the user will not be logged in and be notified of the error
   /// TODO: Add a way to handle the error, snackbar, etc.
-  Future<User?> createUserWithEmailAndPassword(
-      {required String email,
-      required String password,
-      required String name}) async {
-    try {
-      final UserCredential userCredential = await _auth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      final User? user = userCredential.user;
-      // Create user document if above is successful and send to firestore
-      AppUser appUser = AppUser(
-        uid: user!.uid,
-        name: name,
-        email: email,
-        classes: [],
-      );
-      await _firestore
-          .collection('users')
-          .doc(appUser.uid)
-          .set(appUser.toMap());
-      // Notify widget tree that the user has been created
-      notifyListeners();
-      return user;
-    } catch (error) {
-      print(error);
-      return null;
-    }
+  Future<User?> createUserWithEmailAndPassword({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
+    final UserCredential userCredential = await _auth
+        .createUserWithEmailAndPassword(email: email, password: password);
+    final User? user = userCredential.user;
+    // Create user document if above is successful and send to firestore
+    AppUser appUser = AppUser(
+      uid: user!.uid,
+      name: name,
+      email: email,
+      courses: [],
+    );
+    await _firestore.collection('users').doc(appUser.uid).set(appUser.toMap());
+    // Notify widget tree that the user has been created
+    notifyListeners();
+    return user;
   }
 }
