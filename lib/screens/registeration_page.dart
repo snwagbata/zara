@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:zara/components/logo.dart';
 import 'package:zara/helpers/validator.dart';
+import 'package:zara/services/auth.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -22,6 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _passFocus = FocusNode();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final Auth _auth = Auth();
   late bool _passwordVisible;
 
   _fieldFocusChange(
@@ -174,7 +176,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           (states) => Colors.white),
                     ),
                     child: const Text('SIGN UP'),
-                    onPressed: () {},
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        createUser();
+                      }
+                    },
                   ),
                 ],
               ),
@@ -183,5 +189,15 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  void createUser() async {
+    dynamic result = await _auth.createUserWithEmailAndPassword(
+        email: _email.text, password: _password.text, name: _name.text);
+    if (result == null) {
+      print("Email is not valid");
+    } else {
+      print(result.toString());
+    }
   }
 }
