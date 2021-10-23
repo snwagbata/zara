@@ -15,7 +15,7 @@ class Logo extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
         child: CircleAvatar(
           backgroundColor: Colors.transparent,
-          radius: 36.0,
+          radius: 60.0,
           child: Image.asset(_imageLogo),
         ),
       ),
