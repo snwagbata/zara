@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.zara">
+    package="com.hackgt.zara">
    <application
         android:label="zara"
         android:icon="@mipmap/ic_launcher">

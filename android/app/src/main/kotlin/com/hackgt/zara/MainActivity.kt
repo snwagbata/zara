@@ -1,4 +1,4 @@
-package com.example.zara
+package com.hackgt.zara
 
 import io.flutter.embedding.android.FlutterActivity
 
