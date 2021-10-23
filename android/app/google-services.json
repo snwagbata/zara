@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "212826865459",
+    "project_id": "zara-2ee94",
+    "storage_bucket": "zara-2ee94.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212826865459:android:27f317fee8425377e04846",
+        "android_client_info": {
+          "package_name": "com.hackgt.zara"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212826865459-p2ur6edqglanugpnmuf97h526vcaj45b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA06a7KrSNBJfBOoA-Kt0IqZqrNTKEO3fQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212826865459-p2ur6edqglanugpnmuf97h526vcaj45b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
