@@ -1,4 +1,6 @@
-class AppUser {
+import 'package:flutter/material.dart';
+
+class AppUser with ChangeNotifier {
   final String uid;
   final String name;
   final String email;
@@ -10,9 +12,9 @@ class AppUser {
       required this.email,
       required this.courses});
 
-  factory AppUser.fromMap(Map<String, dynamic> data) {
+  factory AppUser.fromMap(Map<String, dynamic>? data) {
     return AppUser(
-      uid: data['uid'],
+      uid: data!['uid'],
       name: data['name'],
       email: data['email'],
       courses: List.from(data['courses'] ?? []),
