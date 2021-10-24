@@ -1,6 +1,6 @@
-# zara
+# Zara
 
-A new Flutter project.
+Gamify Learning.
 
 ## Getting Started
 
