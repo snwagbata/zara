@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:zara/components/logo.dart';
 import 'package:zara/helpers/validator.dart';
+import 'package:zara/services/auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -43,6 +45,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    Auth _auth = Provider.of<Auth>(context);
     final email = TextFormField(
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.emailAddress,
@@ -151,7 +154,10 @@ class _LoginPageState extends State<LoginPage> {
                             (states) => Colors.white),
                       ),
                       child: const Text('SIGN IN'),
-                      onPressed: () {},
+                      onPressed: () => _auth.loginwithEmailAndPassword(
+                        email: _email.text,
+                        password: _password.text,
+                      ),
                     ),
                     TextButton(
                       child: const Text('Forgot password?'),
