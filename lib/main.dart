@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:zara/constants/app_themes.dart';
 import 'package:zara/screens/home_page.dart';
 import 'package:zara/screens/login_page.dart';
+import 'package:zara/screens/profile.dart';
 import 'package:zara/screens/registeration_page.dart';
 import 'package:zara/screens/reset_password.dart';
-import 'package:zara/services/app_user.dart';
 import 'package:zara/services/auth.dart';
 
 Future<void> main() async {
@@ -24,11 +24,6 @@ Future<void> main() async {
         StreamProvider(
           create: (context) => Auth().user,
           initialData: null,
-        ),
-        ChangeNotifierProxyProvider<Auth, AppUserService>(
-          create: (BuildContext context) => AppUserService(Auth().currentUser!),
-          update: (context, auth, authService) =>
-              AppUserService(auth.currentUser!),
         ),
       ],
       child: const MyApp(),
@@ -58,6 +53,7 @@ class _MyAppState extends State<MyApp> {
           '/home': (context) => const HomePage(),
           '/reset-password': (context) => const ResetPasswordPage(),
           '/create-account': (context) => const RegisterPage(),
+          '/profile-page': (context) => const ProfilePage(),
         },
       );
     });
