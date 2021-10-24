@@ -16,7 +16,14 @@ class Auth with ChangeNotifier {
 
   /// Get current user
   /// Used by ProxyProvider to set AppUserService
-  String? get currentUser => _auth.currentUser!.uid;
+  User? get currentUser => _auth.currentUser;
+
+  AppUser appUser() {
+    _firestore.collection('users').doc(currentUser?.uid).get().then((value) {
+      return AppUser.fromMap(value.data());
+    });
+    throw Error();
+  }
 
   /// Create user with email and password
   /// Returns a Future<User>
@@ -42,5 +49,30 @@ class Auth with ChangeNotifier {
     // Notify widget tree that the user has been created
     notifyListeners();
     return user;
+  }
+
+  /// Sign in with email and password
+  /// Returns a Future<User>
+  ///
+  /// If the user is signed in successfully, the user will be logged in and a document will be created in the users collection
+  /// If the user is not signed in successfully, the user will not be logged in and be notified of the error
+  ///
+  Future<User?> loginwithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    final UserCredential userCredential = await _auth
+        .signInWithEmailAndPassword(email: email, password: password);
+    final User? user = userCredential.user;
+    // Notify widget tree that the user has been created
+    notifyListeners();
+    return user;
+  }
+
+  /// Sign out
+  /// Returns a Future<void>
+  Future<void> signOut() async {
+    await _auth.signOut();
+    notifyListeners();
   }
 }
